@@ -40,5 +40,5 @@ const PORT = process.env.PORT || 5555;
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`\x1b[32m%s\x1b[0m`, `Server running on port ${PORT}`);
-    console.log(`\x1b[36m%s\x1b[0m`, `Access it on your local network at: http://192.168.1.20:${PORT}`);
+    console.log(`\x1b[36m%s\x1b[0m`, `Access it on your local network at: http://192.168.1.190:${PORT}`);
 });
