@@ -1,0 +1,27 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "$2a$10$fG.P.P37Pj9QG7mH.ZEh9eVT.NCIqsAFYhxtP1Q3/uD7aH.2z.jXq",
+      "player": "Mouad",
+      "height": 1.72,
+      "matches": 1,
+      "goals": 1,
+      "minPlayed": 45,
+      "position": "defender",
+      "preferredFoot": "Right",
+      "profilePicUrl": "https://placehold.co/100x100/333/FFF?text=M",
+      "status": "Ready",
+      "role": "admin"
+    }
+  ],
+  "ratings": [
+    {
+      "id": 1,
+      "raterId": 1,
+      "ratedPlayerId": 1,
+      "score": 10
+    }
+  ]
+}
