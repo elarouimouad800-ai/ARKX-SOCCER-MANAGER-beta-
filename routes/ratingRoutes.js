@@ -12,13 +12,16 @@ const ratePlayerRules = [
     .isInt({ min: 1, max: 10 }).withMessage('Rating must be an integer between 1 and 10')
 ];
 
-router.post(
-  '/rate/:id', 
-  authenticateToken, 
-  ratePlayerRules, 
-  validate, 
-  catchAsync(ratingController.ratePlayer)
-);
+// router.post(
+//   '/rate/:id', 
+//   authenticateToken, 
+//   ratePlayerRules, 
+//   validate, 
+//   catchAsync(ratingController.ratePlayer)
+// );
+
+router.post('/:id', authenticateToken, ratePlayerRules, validate, catchAsync(ratingController.ratePlayer));
+
 
 module.exports = router;
 

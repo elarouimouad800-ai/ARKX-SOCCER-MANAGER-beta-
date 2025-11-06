@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARKX Soccer Team Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Message Box -->
+    <div class="message-box" id="message-box"></div>
+
+    <!-- Auth Container -->
+    <div id="auth-container">
+        <div class="auth-box">
+            <div class="tabs">
+                <span id="show-login-btn" class="active">Login</span>
+                <span id="show-register-btn">Create Account</span>
+            </div>
+
+            <div id="login-view">
+                <h2>Welcome Back</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="loginUsername">Username</label>
+                        <input type="text" id="loginUsername" name="loginUsername" required autocomplete="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" name="loginPassword" required autocomplete="current-password">
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+
+            <div id="register-view" style="display: none;">
+                <h2>Join the Team</h2>
+                <form id="register-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="reg-username">Username</label>
+                            <input type="text" id="reg-username" name="username" required autocomplete="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-password">Password (6+ characters)</label>
+                            <input type="password" id="reg-password" name="password" minlength="6" required autocomplete="new-password">
+                        </div>
+                        <div class="form-group">
+                            <label for="playerName">Player Name</label>
+                            <input type="text" id="playerName" name="player" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height (m)</label>
+                            <input type="number" step="0.01" id="height" name="height" placeholder="1.75" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Position</label>
+                            <select id="position" name="position" required>
+                                <option value="goalkeeper">Goalkeeper</option>
+                                <option value="defender">Defender</option>
+                                <option value="midfielder">Midfielder</option>
+                                <option value="attacker">Attacker</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="preferredFoot">Preferred Foot</label>
+                            <select id="preferredFoot" name="preferredFoot" required>
+                                <option value="Right">Right</option>
+                                <option value="Left">Left</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="profilePicUrl">Profile Picture URL (Optional)</label>
+                        <input type="url" id="profilePicUrl" name="profilePicUrl" placeholder="https://...">
+                    </div>
+                    <button type="submit">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div id="app-container">
+        <header>
+            <div class="header-title">⚽ ARKX SOCCER MANAGER</div>
+            <div class="header-buttons">
+                <button class="theme-toggle" id="theme-toggle-btn">🌙</button>
+                <button class="secondary" id="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <main>
+            <div class="column-left">
+                <div class="card filter-container">
+                    <h2>🔍 Search & Filter</h2>
+                    <form id="filter-form">
+                        <div class="form-grid-small">
+                            <div class="form-group">
+                                <label for="filter-name">Name</label>
+                                <input type="text" id="filter-name" name="name" placeholder="Search...">
+                            </div>
+                            <div class="form-group">
+                                <label for="filter-position">Position</label>
+                                <select id="filter-position" name="position">
+                                    <option value="">All Positions</option>
+                                    <option value="goalkeeper">Goalkeeper</option>
+                                    <option value="defender">Defender</option>
+                                    <option value="midfielder">Midfielder</option>
+                                    <option value="attacker">Attacker</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="filter-status">Status</label>
+                                <select id="filter-status" name="status">
+                                    <option value="">All Status</option>
+                                    <option value="Ready">Ready</option>
+                                    <option value="Not Ready">Not Ready</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="filter-foot">Foot</label>
+                                <select id="filter-foot" name="foot">
+                                    <option value="">All</option>
+                                    <option value="Right">Right</option>
+                                    <option value="Left">Left</option>
+                                    <option value="Both">Both</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-buttons">
+                            <button type="submit">Apply Filter</button>
+                            <button type="button" class="secondary" id="reset-filter-btn">Reset</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="card table-container">
+                    <h2>👥 Team Roster</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Player</th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Foot</th>
+                                <th>Status</th>
+                                <th>Height</th>
+                                <th>Rating</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="player-table-body">
+                            <tr>
+                                <td colspan="8" style="text-align: center; padding: 40px;">
+                                    <div class="spinner"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="column-right">
+                <div class="card teams-generator">
+                    <h2>🎲 Team Generator</h2>
+                    <div class="form-grid-small">
+                        <div class="form-group">
+                            <label for="num-teams">Teams</label>
+                            <input type="number" id="num-teams" value="2" min="2" max="10">
+                        </div>
+                        <div class="form-group">
+                            <label for="players-per-team">Players/Team</label>
+                            <input type="number" id="players-per-team" value="5" min="3" max="15">
+                        </div>
+                        <div class="form-group">
+                            <label for="team-strategy">Strategy</label>
+                            <select id="team-strategy">
+                                <option value="rated">Fair (By Rating)</option>
+                                <option value="balanced">Balanced (By Position)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="generate-teams-btn">Generate Teams</button>
+                    <div id="teams-output"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 ARKX Soccer Manager. Built with ⚽ and 💚</p>
+        </footer>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="cancel-edit-btn">&times;</span>
+            <h2 id="edit-title">Edit Profile</h2>
+            <form id="edit-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="edit-playerName">Player Name</label>
+                        <input type="text" id="edit-playerName" name="player" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-height">Height (m)</label>
+                        <input type="number" step="0.01" id="edit-height" name="height" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-position">Position</label>
+                        <select id="edit-position" name="position" required>
+                            <option value="goalkeeper">Goalkeeper</option>
+                            <option value="defender">Defender</option>
+                            <option value="midfielder">Midfielder</option>
+                            <option value="attacker">Attacker</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-preferredFoot">Preferred Foot</label>
+                        <select id="edit-preferredFoot" name="preferredFoot" required>
+                            <option value="Right">Right</option>
+                            <option value="Left">Left</option>
+                            <option value="Both">Both</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-status">Status</label>
+                        <select id="edit-status" name="status" required>
+                            <option value="Ready">Ready</option>
+                            <option value="Not Ready">Not Ready</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="edit-admin-role-group" style="display: none;">
+                        <label for="edit-role">Role (Admin Only)</label>
+                        <select id="edit-role" name="role">
+                            <option value="player">Player</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-profilePicUrl">Profile Picture URL</label>
+                    <input type="url" id="edit-profilePicUrl" name="profilePicUrl" placeholder="https://...">
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Rate Modal -->
+    <div id="rate-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="cancel-rate-btn">&times;</span>
+            <h2>⭐ Rate Player: <span id="rate-player-name"></span></h2>
+            <form id="rate-form">
+                <div class="form-group">
+                    <label for="rate-rating">Rating (1-10)</label>
+                    <select id="rate-rating" name="score" required>
+                        <option value="">Select rating...</option>
+                        <option value="1">1 - Poor</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Average</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8 - Good</option>
+                        <option value="9">9</option>
+                        <option value="10">10 - Excellent</option>
+                    </select>
+                </div>
+                <button type="submit">Submit Rating</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
